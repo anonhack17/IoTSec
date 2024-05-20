@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Analyze {{ device.name }} Data{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Анализ данных для {{ device.name }}</h1>
+    <p>{{ stats }}</p>
+
+    {% if anomalies %}
+    <h2>Аномалии</h2>
+    <ul>
+        {% for anomaly in anomalies %}
+        <li>{{ anomaly.timestamp }} - {{ anomaly.value }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Аномалий не обнаружено или недостаточно данных для анализа.</p>
+    {% endif %}
+
+    <a href="{% url 'device_list' %}"><button>Вернуться к списку устройств</button></a>
+</div>
+{% endblock %}

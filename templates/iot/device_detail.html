@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ device.name }} Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ device.name }} Подробности</h1>
+    <h2>Точки данных</h2>
+    <p>{{ device.description }}</p>
+    <p>{{ device.created_at }}</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Временная метка</th>
+                <th>Данные</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data_point in data_points %}
+            <tr>
+                <td>{{ data_point.timestamp }}</td>
+                <td>{{ data_point.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Anomalies</h2>
+    <ul>
+        {% for anomaly in anomalies %}
+        <li>{{ anomaly.timestamp }} - {{ anomaly.value }}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="btn-group">
+        <a href="{% url 'add_data_point' device.id %}" class="button">Добавить точку данных</a>
+        <a href="{% url 'analyze_device_data' device.id %}" class="button">Анализ данных</a>
+        <a href="{% url 'device_list' %}" class="button secondary">Вернуться к списку устройств</a>
+    </div>
+</div>
+{% endblock %}

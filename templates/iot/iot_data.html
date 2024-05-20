@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IoT Data</title>
+</head>
+<body>
+    <h1>Данные IoT</h1>
+    <ul id="data-list">
+        <!-- Сюда будут добавляться данные с устройств IoT -->
+    </ul>
+
+    <script>
+        var socket = new WebSocket("ws://localhost:8000/ws/iot_data/");
+
+        socket.onmessage = function(event) {
+            var dataList = document.getElementById("data-list");
+            var newItem = document.createElement("li");
+            newItem.textContent = event.data;
+            dataList.appendChild(newItem);
+        };
+    </script>
+</body>
+</html>

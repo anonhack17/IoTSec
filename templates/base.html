@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IoT Dashboard{% endblock %}</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>IoT Dashboard</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Главная</a></li>
+            <li><a href="{% url 'device_list' %}">Устройства</a></li>
+            <li><a href="{% url 'add_device' %}">Добавить устройство</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer>
+    <p>&copy; 2024 Панель управления Интернетом вещей. Все права защищены.</p>
+</footer>
+</body>
+</html>

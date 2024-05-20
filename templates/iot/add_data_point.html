@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить точку данных для {{ device.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Добавить точку данных для {{ device.name }}</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.data.label_tag }}
+            {{ form.data }}
+        </div>
+        <button type="submit" class="button">Добавить точку данных</button>
+    </form>
+    <a href="{% url 'device_detail' device.id %}" class="button secondary">Вернуться к устройству</a>
+</div>
+{% endblock %}
