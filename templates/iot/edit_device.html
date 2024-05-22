@@ -1,0 +1,15 @@
+<!-- templates/edit_device.html -->
+{% extends 'base.html' %}
+
+{% block title %}Изменить устройство{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Изменить устройство</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button primary">Сохранить изменения</button>
+    </form>
+</div>
+{% endblock %}

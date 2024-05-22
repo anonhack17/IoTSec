@@ -1,13 +1,23 @@
+<!-- templates/device_detail.html -->
 {% extends 'base.html' %}
 
-{% block title %}{{ device.name }} Details{% endblock %}
+{% block title %}{{ device.name }} Подробности{% endblock %}
 
 {% block content %}
 <div class="container">
+<a style="background: #444444; margin-top: 20px" href="{% url 'device_list' %}" class="button secondary">Вернуться к списку устройств</a>
+    
     <h1>{{ device.name }} Подробности</h1>
-    <h2>Точки данных</h2>
     <p>{{ device.description }}</p>
-    <p>{{ device.created_at }}</p>
+    <p>Создано: {{ device.created_at }}</p>
+    <div class="btn-group">
+        <a href="{% url 'edit_device' device.id %}" class="button">Изменить устройство</a>
+        <form method="post" action="{% url 'delete_device' device.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: red" class="button danger">Удалить устройство</button>
+        </form>
+    </div>
+    <h2>Точки данных</h2>
     <table class="table">
         <thead>
             <tr>
@@ -25,17 +35,46 @@
         </tbody>
     </table>
 
-    <h2>Anomalies</h2>
+    <h2>Аномалии</h2>
     <ul>
         {% for anomaly in anomalies %}
         <li>{{ anomaly.timestamp }} - {{ anomaly.value }}</li>
         {% endfor %}
     </ul>
 
+    <h2>Политики безопасности</h2>
+    <ul>
+        {% for policy in policies %}
+        <li>
+            Роль: {{ policy.role }}
+            <br>
+            Политика безопасности: {{ policy.policy }}
+            <br>
+            <a href="{% url 'edit_security_policy' policy.id %}" class="button">Редактировать</a>
+            <form method="post" action="{% url 'delete_security_policy' policy.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="button danger" style="background: red">Удалить</button>
+            </form>
+        </li>
+        {% empty %}
+        <li>Нет политик безопасности для этого устройства.</li>
+        {% endfor %}
+    </ul>
+
+
+   
+
     <div class="btn-group">
-        <a href="{% url 'add_data_point' device.id %}" class="button">Добавить точку данных</a>
-        <a href="{% url 'analyze_device_data' device.id %}" class="button">Анализ данных</a>
-        <a href="{% url 'device_list' %}" class="button secondary">Вернуться к списку устройств</a>
+         <form style="display: inline" method="post" action="{% url 'add_security_policy' device.id %}">
+            {% csrf_token %}
+            {{ policy_form.as_p }}
+            <button type="submit"  style="background: cornflowerblue" class="button primary">Добавить политику безопасности</button>
+        </form>
+        <a href="{% url 'add_data_point' device.id %}" style="background: cornflowerblue" class="button">Добавить точку данных</a>
+        <a href="{% url 'analyze_device_data' device.id %}" style="background: cornflowerblue" class="button">Scan данных</a>
+        
     </div>
+
+
 </div>
 {% endblock %}

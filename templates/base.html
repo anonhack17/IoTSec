@@ -18,6 +18,22 @@
             <li><a href="{% url 'home' %}">Главная</a></li>
             <li><a href="{% url 'device_list' %}">Устройства</a></li>
             <li><a href="{% url 'add_device' %}">Добавить устройство</a></li>
+            {% if user.is_authenticated %}
+                    <li>
+                        <form style="
+    background: none;
+    border: none;
+    padding: 0;
+" method="post" action="{% url 'logout' %}" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="login-btn"><i class="fas fa-sign-out-alt"
+                                                                       class="login-btn"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                {% endif %}
         </ul>
     </nav>
 </header>

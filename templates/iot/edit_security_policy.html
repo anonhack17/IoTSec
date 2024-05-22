@@ -1,0 +1,16 @@
+<!-- templates/edit_security_policy.html -->
+{% extends 'base.html' %}
+
+{% block title %}Редактировать политику безопасности{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Редактировать политику безопасности для {{ policy.device.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button primary">Сохранить изменения</button>
+    </form>
+    <a href="{% url 'device_detail' policy.device.id %}" class="button secondary">Отмена</a>
+</div>
+{% endblock %}

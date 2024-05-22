@@ -16,15 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from django.urls import path
-from iot.views import iot_data, device_list,device_detail, add_device, analyze_device_data, home, add_data_point
+from iot.views import add_security_policy, edit_security_policy, delete_security_policy, edit_device,delete_device , iot_data, device_list,device_detail, add_device, analyze_device_data, home, add_data_point
 
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('data/', iot_data, name='iot_data'),
     path('devices/add/', add_device, name='add_device'),
     path('devices/', device_list, name='device_list'),
+    path('device/<int:device_id>/edit/', edit_device, name='edit_device'),
+    path('device/<int:device_id>/delete/', delete_device, name='delete_device'),
+    path('device/<int:device_id>/add_policy/', add_security_policy, name='add_security_policy'),
+    path('policy/<int:policy_id>/edit/', edit_security_policy, name='edit_security_policy'),
+    path('policy/<int:policy_id>/delete/', delete_security_policy, name='delete_security_policy'),
     path('devices/<int:device_id>/', device_detail, name='device_detail'),
     path('devices/<int:device_id>/analyze/', analyze_device_data, name='analyze_device_data'),
     path('devices/<int:device_id>/add_data_point/', add_data_point, name='add_data_point'),  # Новый маршрут
